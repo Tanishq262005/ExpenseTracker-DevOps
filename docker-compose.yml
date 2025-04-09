@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo
+    container_name: mongo-container
+    restart: always
+    ports:
+      - "27017:27017"
+
+  backend:
+    build: .
+    container_name: expense-app
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/expenses
